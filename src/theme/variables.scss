@@ -33,11 +33,14 @@ $app-direction: ltr;
 // colors so you can add, rename and remove colors as needed.
 // The "primary" color is the only required color in the map.
 
+// Color palette: http://www.colourlovers.com/palette/1916178/Happy_Day_!
 $colors: (
-  primary:    #488aff,
-  secondary:  #32db64,
+  primary:    #F45D4C,
+  secondary:  #A1DBB2,
+  ternary: #FEE5AD,
+  quarternary:    #FACA66,
   danger:     #f53d3d,
-  light:      #f4f4f4,
+  light:      #fff,
   dark:       #222
 );
 
@@ -45,22 +48,34 @@ $colors: (
 // App iOS Variables
 // --------------------------------------------------
 // iOS only Sass variables can go here
-
-
+$toolbar-ios-background: color($colors, secondary);
+$tabs-ios-background: color($colors, secondary);
+$toolbar-ios-title-text-color: color($colors, primary);
+$tabs-ios-tab-color-active: color($colors, primary);
+$tabs-ios-tab-color-inactive: color($colors, light);
+$list-ios-border-color: color($colors, quarternary);
 
 
 // App Material Design Variables
 // --------------------------------------------------
 // Material Design only Sass variables can go here
-
-
+$toolbar-md-background: color($colors, secondary);
+$tabs-md-background: color($colors, secondary);
+$toolbar-md-title-text-color: color($colors, primary);
+$tabs-md-tab-color-active: color($colors, primary);
+$tabs-md-tab-color-inactive: color($colors, light);
+$list-md-border-color: color($colors, quarternary);
 
 
 // App Windows Variables
 // --------------------------------------------------
 // Windows only Sass variables can go here
-
-
+$toolbar-wp-background: color($colors, secondary);
+$tabs-wp-background: color($colors, secondary);
+$toolbar-wp-title-text-color: color($colors, primary);
+$tabs-wp-tab-color-active: color($colors, primary);
+$tabs-wp-tab-color-inactive: color($colors, light);
+$list-wp-border-color: color($colors, quarternary);
 
 
 // App Theme
