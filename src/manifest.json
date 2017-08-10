@@ -1,6 +1,6 @@
 {
-  "name": "Ionic",
-  "short_name": "Ionic",
+  "name": "Agility Course Scrambler",
+  "short_name": "AC Scrambler",
   "start_url": "index.html",
   "display": "standalone",
   "icons": [{
