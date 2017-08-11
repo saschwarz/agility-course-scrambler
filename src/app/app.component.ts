@@ -5,6 +5,9 @@ import { SplashScreen } from '@ionic-native/splash-screen';
 
 import { AboutPage } from '../pages/about/about';
 import { HomePage } from '../pages/home/home';
+import { DoubleBoxPage } from '../pages/double-box/double-box';
+
+import { Course, CourseProvider } from '../providers/course/course';
 
 
 @Component({
@@ -14,14 +17,20 @@ export class MyApp {
   @ViewChild(Nav) nav: Nav;
 
   rootPage: any = HomePage;
-  pages: Array<{title: string, component: any}>;
+  courses: Array<Course> = [];
+  pages: Array<{title: string, component: any, count?: boolean}>;
 
-  constructor(public platform: Platform, public statusBar: StatusBar, public splashScreen: SplashScreen) {
+  constructor(
+    private courseProvider: CourseProvider,
+    public platform: Platform,
+    public statusBar: StatusBar,
+    public splashScreen: SplashScreen) {
     this.initializeApp();
 
     // used for an example of ngFor and navigation
     this.pages = [
       { title: 'Scramble!', component: HomePage },
+      { title: 'Double Box', component: DoubleBoxPage, count: true },
       { title: 'About', component: AboutPage }
     ];
   }
@@ -31,6 +40,7 @@ export class MyApp {
       // Okay, so the platform is ready and our plugins are available.
       // Here you can do any higher level native things you might need.
       this.statusBar.styleDefault();
+      this.courseProvider.courses.subscribe(courses => this.courses = courses);
       this.splashScreen.hide();
     });
   }

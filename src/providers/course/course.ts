@@ -1,20 +1,26 @@
 import { Injectable } from '@angular/core';
-import {Observable} from 'rxjs/Observable';
+import { Observable } from 'rxjs/Observable';
+import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 
 import 'rxjs/add/operator/map';
-import 'rxjs/add/observable/of';
-import 'rxjs/add/observable/range'
+import 'rxjs/add/observable/range';
 
 
 export class Side {
   // One side/approach of an Obstacle and the sequence numbers currently assigned to it.
   labels: Array<string> = [];
 
+  constructor(labels?: Array<string>) {
+    if (labels) {
+      this.labels = labels;
+    }
+  }
+
   addLabel(label: string) {
     this.labels.unshift(label);
   }
 
-  removeLabel() : string {
+  removeLabel(): string {
     return this.labels.shift();
   }
 }
@@ -25,9 +31,13 @@ export class Obstacle {
   transform: string = '';  // SVG style transform translate/rotate/transform within the Course.
   sides: Array<Side>;
 
-  constructor(transform: string) {
+  constructor({ transform = '', sides = [] }: { transform?: string, sides?: Array<Side> }) {
     this.transform = transform;
-    this.sides = [new Side(), new Side()];
+    if (sides.length) {
+      this.sides = [new Side(sides[0].labels), new Side(sides[1].labels)];
+    } else {
+      this.sides = [new Side(), new Side()];
+    }
   }
 
   numLabels(): number {
@@ -50,23 +60,28 @@ export class Obstacle {
 
 export class Course {
   // The obstacles and the sequence through them
+  name: string = '';
+  type: string = 'course';
+  created: Date;
   obstacles: Array<Obstacle> = [];
 
-  constructor(obstacles: Array<Obstacle>) {
-    this.obstacles = obstacles;
+  constructor({ type = 'course', name = '', obstacles, created = null }: { type?: string, name?: string, obstacles?: Array<Obstacle>, created?: Date }) {
+    this.type = type;
+    this.name = name;
+    this.obstacles = obstacles.map(o => new Obstacle({ transform: o.transform, sides: o.sides }));
+    this.created = created || new Date();
   }
 
-  scramble(): string {
+  scramble() {
     // get most used obstacle pop a Label off it.
     let source = this.mostUsedObstacle();
     let dest = source;
     // find a least used obstacle and add the label to it.
     do {
-     dest = this.leastUsedObstacle();
-    } while(source === dest);
+      dest = this.leastUsedObstacle();
+    } while (source === dest);
     let label = source.popLabel();
     dest.pushLabel(label);
-    return label;
   }
 
   protected generateSequence(numLabels: number) {
@@ -81,7 +96,7 @@ export class Course {
         }
         lastObstacle = obstacle;
         obstacle.sides[Math.round(Math.random())].labels.push(l.toString(10));
-    });
+      });
   }
 
   protected mostUsedObstacle(): Obstacle {
@@ -97,27 +112,48 @@ export class Course {
 
 
 export class DoubleBoxCourse extends Course {
-  constructor() {
-    // start with a randomly created course
-    let obstacles = [
-      new Obstacle('translate(190 80)'),
-      new Obstacle('matrix(0,1,-1,0,290,179)'),
-      new Obstacle('matrix(0,1,-1,0,90,179)'),
-      new Obstacle('translate(190,278)'),
-      new Obstacle('matrix(0,1,-1,0,290,376)'),
-      new Obstacle('matrix(0,1,-1,0,90,376)'),
-      new Obstacle('translate(190,475)')];
-    super(obstacles);
-    this.generateSequence(16);
+  static type: string = 'doublebox';
+
+  constructor({ name = '', obstacles = [] }: { name?: string, obstacles?: Array<Obstacle> }) {
+    super({
+      type: DoubleBoxCourse.type,
+      name: name,
+      obstacles: obstacles
+    });
+    if (!obstacles.length) {
+      // start with a randomly created course
+      this.obstacles = [
+        new Obstacle({ transform: 'translate(190 80)' }),
+        new Obstacle({ transform: 'matrix(0,1,-1,0,290,179)' }),
+        new Obstacle({ transform: 'matrix(0,1,-1,0,90,179)' }),
+        new Obstacle({ transform: 'translate(190,278)' }),
+        new Obstacle({ transform: 'matrix(0,1,-1,0,290,376)' }),
+        new Obstacle({ transform: 'matrix(0,1,-1,0,90,376)' }),
+        new Obstacle({ transform: 'translate(190,475)' })];
+      this.generateSequence(16);
+    }
   }
 }
 
 
 @Injectable()
 export class CourseProvider {
-  private courses: Array<Course> = [];
+  courses: BehaviorSubject<Array<Course>>;
+  private _courses: Array<Course> = [];
+
+  constructor() {
+    this.courses = new BehaviorSubject(this._courses);
+  }
 
   add(course: Course) {
-    this.courses.push(course);
+    this._courses.push(course);
+    this._courses.sort((a, b) => b.created.getTime() - a.created.getTime());
+    this.courses.next(this._courses);
   }
+
+  remove(course: Course) {
+    this._courses = this._courses.filter(c => c !== course);
+    this.courses.next(this._courses);
+  }
+
 }

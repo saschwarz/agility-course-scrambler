@@ -1,0 +1,27 @@
+<ion-header>
+  <ion-navbar>
+    <button ion-button menuToggle>
+      <ion-icon name="menu"></ion-icon>
+    </button>
+    <ion-title>Double Box</ion-title>
+  </ion-navbar>
+</ion-header>
+
+
+<ion-content>
+    <ion-list>
+        <ion-item-sliding #slidingItem *ngFor="let c of courses">
+            <ion-item>
+                <ion-thumbnail item-start>
+                    <course [course]="c" [height]="200"></course>
+                </ion-thumbnail>
+                 <h2>{{c.name}}</h2>
+                <p>{{c.created | date:'medium'}}</p>
+            </ion-item>
+            <ion-item-options side="right">
+                <button ion-button item-end color="danger" (click)="delete(c)">Delete</button>
+                <button ion-button item-end color="ternary" (click)="scramble(c, slidingItem)">Scramble</button>
+            </ion-item-options>
+        </ion-item-sliding>
+    </ion-list>
+</ion-content>

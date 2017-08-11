@@ -1,5 +1,5 @@
-import { Component, ViewChild, NgZone } from '@angular/core';
-import { Platform } from 'ionic-angular';
+import { Component, NgZone, ViewChild } from '@angular/core';
+import { AlertController, NavController, NavParams, Platform, ToastController } from 'ionic-angular';
 
 import { Shake } from '@ionic-native/shake';
 
@@ -10,7 +10,7 @@ import 'rxjs/add/observable/from';
 import 'rxjs/add/observable/range';
 import 'rxjs/add/observable/timer';
 
-import { Course, DoubleBoxCourse } from '../../providers/course/course';
+import { Course, CourseProvider, DoubleBoxCourse } from '../../providers/course/course';
 
 
 @Component({
@@ -26,18 +26,27 @@ export class HomePage {
   private _watch;
 
   constructor(
+    private alertCtrl: AlertController,
+    private courseProvider: CourseProvider,
+    private navCtrl: NavController,
+    private navParams: NavParams,
     private platform: Platform,
     private shake: Shake,
+    private toastCtrl: ToastController,
     private zone: NgZone,
   ) {
-    this.course = new DoubleBoxCourse();
+    this.course = this.navParams.get('course');
+    if (!this.course) {
+      this.course = new DoubleBoxCourse({});
+    }
+
     this.platform.ready().then(() => {
       // runtime check for desktop
       if (!this.platform.is('core') && !this.platform.is('mobileweb')) {
         this.device = true;
         this._watch = this.shake.startWatch().subscribe((event) => {
           // iOS needs this run in NgZone
-          this.zone.run(() =>this.scramble());
+          this.zone.run(() => this.scramble());
         });
       }
     });
@@ -60,5 +69,36 @@ export class HomePage {
       () => {},
       () => this.scrambling = false
     );
+  }
+
+  save() {
+    let confirm = this.alertCtrl.create({
+      title: 'Save',
+      message: 'Enter a name for this Course',
+      inputs: [
+        {
+          name: 'name',
+          placeholder: 'Name'
+        },
+      ],
+      buttons: [
+        {
+          text: 'Cancel'
+        },
+        {
+          text: 'OK',
+          handler: (data) => {
+            this.courseProvider.add(new Course({type: this.course.type, name: data.name, obstacles: this.course.obstacles}));
+            let toast = this.toastCtrl.create({
+              message: `Course "${data.name}" saved!`,
+              position: 'top',
+              duration: 2000
+            });
+            toast.present();
+          }
+        }
+      ]
+    });
+    confirm.present();
   }
 }

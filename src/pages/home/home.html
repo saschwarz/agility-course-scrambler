@@ -12,5 +12,8 @@
 </ion-content>
 
 <ion-footer>
-    <button [hidden]="device" ion-button icon-left full large color="primary" (click)="scramble()"><ion-icon name="aperture"></ion-icon>Scramble!</button>
+    <ion-row nowrap>
+        <button [hidden]="device" ion-button icon-left large full color="primary" (click)="scramble()"><ion-icon name="aperture"></ion-icon>Scramble!</button>
+        <button ion-button icon-left large full color="quarternary" (click)="save()"><ion-icon name="bookmark"></ion-icon>Save</button>
+    </ion-row>
 </ion-footer>
