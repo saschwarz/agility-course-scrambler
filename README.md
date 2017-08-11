@@ -1,24 +1,16 @@
-This is a starter template for [Ionic](http://ionicframework.com/docs/) projects.
+This is a demo application for my Introduction to Ionic presentation.
 
-## How to use this template
+- [Slides](https://docs.google.com/presentation/d/1OmABc2JcqsPP3i6Q2EfYat-F6GKqGHjiUE2ywPcB09Q/edit?usp=sharing)
+- Video
+- [Ionic](http://ionicframework.com)
 
-*This template does not work on its own*. The shared files for each starter are found in the [ionic2-app-base repo](https://github.com/ionic-team/ionic2-app-base).
+The application is also hosted from this repository as a Progressive Web App (PWA): [Demo](https://saschwarz.github.io/agility-course-scrambler/)
 
-To use this template, either create a new ionic project using the ionic node.js utility, or copy the files from this repository into the [Starter App Base](https://github.com/ionic-team/ionic2-app-base).
-
-### With the Ionic CLI:
-
-Take the name after `ionic2-starter-`, and that is the name of the template to be used when using the `ionic start` command below:
+To run it:
 
 ```bash
-$ sudo npm install -g ionic cordova
-$ ionic start myTabs tabs
-```
-
-Then, to run it, cd into `myTabs` and run:
-
-```bash
-$ ionic cordova platform add ios
+$ npm install
+$ ionic cordova platform add
 $ ionic cordova run ios
 ```
 
