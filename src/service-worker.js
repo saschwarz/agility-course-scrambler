@@ -8,7 +8,7 @@
 importScripts('./build/sw-toolbox.js');
 
 self.toolbox.options.cache = {
-  name: 'ionic-cache'
+  name: 'acscrambler-cache'
 };
 
 // pre-cache our key assets
@@ -19,7 +19,9 @@ self.toolbox.precache(
     './build/main.css',
     './build/polyfills.js',
     'index.html',
-    'manifest.json'
+    'manifest.json',
+    'assets/logo-labeled.svg',
+    'assets/acs-text.svg'
   ]
 );
 
