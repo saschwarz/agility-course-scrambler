@@ -2,6 +2,8 @@ import { BrowserModule } from '@angular/platform-browser';
 import { ErrorHandler, NgModule } from '@angular/core';
 import { IonicApp, IonicErrorHandler, IonicModule } from 'ionic-angular';
 
+import { IonicStorageModule } from '@ionic/storage';
+
 import { Shake } from '@ionic-native/shake';
 
 import { MyApp } from './app.component';
@@ -28,6 +30,7 @@ import { CourseProvider } from '../providers/course/course';
     BrowserModule,
     ComponentsModule,
     IonicModule.forRoot(MyApp),
+    IonicStorageModule.forRoot()
   ],
   bootstrap: [IonicApp],
   entryComponents: [

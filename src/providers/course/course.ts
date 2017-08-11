@@ -2,6 +2,10 @@ import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs/Observable';
 import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 
+import { Platform } from 'ionic-angular';
+
+import { Storage } from '@ionic/storage';
+
 import 'rxjs/add/operator/map';
 import 'rxjs/add/observable/range';
 
@@ -141,18 +145,41 @@ export class CourseProvider {
   courses: BehaviorSubject<Array<Course>>;
   private _courses: Array<Course> = [];
 
-  constructor() {
+  constructor(private platform: Platform,
+    private storage: Storage) {
+    this.platform.ready().then(() => {
+      this.storage.get('courses').then(courses => courses && courses.map(c => this._add(this._courseFactory(c))));
+    });
     this.courses = new BehaviorSubject(this._courses);
   }
 
-  add(course: Course) {
+  private _courseFactory(course: any): Course {
+    let newCourse;
+    switch (course.type) {
+      case DoubleBoxCourse.type:
+        newCourse = new DoubleBoxCourse(course)
+        break;
+
+      default:
+        newCourse = new Course(course);
+    }
+    return newCourse;
+  }
+
+  _add(course: Course) {
     this._courses.push(course);
     this._courses.sort((a, b) => b.created.getTime() - a.created.getTime());
     this.courses.next(this._courses);
   }
 
+  add(course: Course) {
+    this._add(course);
+    this.storage.set('courses', this._courses)
+  }
+
   remove(course: Course) {
     this._courses = this._courses.filter(c => c !== course);
+    this.storage.set('courses', this._courses)
     this.courses.next(this._courses);
   }
 

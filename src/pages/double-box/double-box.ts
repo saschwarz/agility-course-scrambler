@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { AlertController, NavController, NavParams, ItemSliding } from 'ionic-angular';
+import { AlertController, NavController, ItemSliding } from 'ionic-angular';
 
 import { Course, CourseProvider } from '../../providers/course/course';
 
