@@ -9,6 +9,14 @@ import 'rxjs/add/observable/range'
 export class Side {
   // One side/approach of an Obstacle and the sequence numbers currently assigned to it.
   labels: Array<string> = [];
+
+  addLabel(label: string) {
+    this.labels.unshift(label);
+  }
+
+  removeLabel() : string {
+    return this.labels.shift();
+  }
 }
 
 
@@ -25,6 +33,18 @@ export class Obstacle {
   numLabels(): number {
     return this.sides.reduce((sum, side) => sum + side.labels.length, 0);
   }
+
+  popLabel(): string {
+    // pop from Side with most labels
+    let side = this.sides[0].labels.length > this.sides[1].labels.length ? this.sides[0] : this.sides[1];
+    return side.removeLabel();
+  }
+
+  pushLabel(label: string) {
+    // push on Side with fewest labels
+    let side = this.sides[0].labels.length < this.sides[1].labels.length ? this.sides[0] : this.sides[1];
+    side.addLabel(label);
+  }
 }
 
 
@@ -34,6 +54,19 @@ export class Course {
 
   constructor(obstacles: Array<Obstacle>) {
     this.obstacles = obstacles;
+  }
+
+  scramble(): string {
+    // get most used obstacle pop a Label off it.
+    let source = this.mostUsedObstacle();
+    let dest = source;
+    // find a least used obstacle and add the label to it.
+    do {
+     dest = this.leastUsedObstacle();
+    } while(source === dest);
+    let label = source.popLabel();
+    dest.pushLabel(label);
+    return label;
   }
 
   protected generateSequence(numLabels: number) {
@@ -49,6 +82,10 @@ export class Course {
         lastObstacle = obstacle;
         obstacle.sides[Math.round(Math.random())].labels.push(l.toString(10));
     });
+  }
+
+  protected mostUsedObstacle(): Obstacle {
+    return this.obstacles.sort((a, b) => b.numLabels() - a.numLabels()).slice(0, 4)[Math.floor(Math.random() * 4)];
   }
 
   protected leastUsedObstacle(): Obstacle {

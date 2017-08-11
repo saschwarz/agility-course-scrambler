@@ -3,4 +3,10 @@ page-home {
         display: flex;
         justify-content: center;
     }
+    course .scramble {
+        display: none;
+    }
+    course.scrambling .scramble {
+        display: block;
+    }
 }

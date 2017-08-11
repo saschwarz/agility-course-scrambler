@@ -1,12 +1,16 @@
 <ion-header>
-  <ion-navbar>
-    <button ion-button menuToggle>
+    <ion-navbar>
+        <button ion-button menuToggle>
       <ion-icon name="menu"></ion-icon>
     </button>
-    <ion-title>Scramble!</ion-title>
-  </ion-navbar>
+        <ion-title>Scramble!</ion-title>
+    </ion-navbar>
 </ion-header>
 
 <ion-content #content padding>
-  <course [course]="course" [height]="courseHeight"></course>
+    <course [course]="course" [height]="courseHeight" [class.scrambling]="scrambling"></course>
 </ion-content>
+
+<ion-footer>
+    <button [hidden]="device" ion-button icon-left full large color="primary" (click)="scramble()"><ion-icon name="aperture"></ion-icon>Scramble!</button>
+</ion-footer>
