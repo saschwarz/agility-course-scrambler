@@ -3,10 +3,10 @@
     <button ion-button menuToggle>
       <ion-icon name="menu"></ion-icon>
     </button>
-    <ion-title>Home</ion-title>
+    <ion-title>Scramble!</ion-title>
   </ion-navbar>
 </ion-header>
 
-<ion-content padding>
-  <img class="labeled-logo" src="/assets/logo-labeled.svg" alt="Agility Course Scrambler logo" />
+<ion-content #content padding>
+  <course [course]="course" [height]="courseHeight"></course>
 </ion-content>

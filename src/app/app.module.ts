@@ -6,29 +6,36 @@ import { MyApp } from './app.component';
 import { HomePage } from '../pages/home/home';
 import { AboutPage } from '../pages/about/about';
 
-import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
+import { StatusBar } from '@ionic-native/status-bar';
+
+import { ComponentsModule } from '../components/components.module';
+import { CourseProvider } from '../providers/course/course';
+
 
 @NgModule({
   declarations: [
-    MyApp,
+    AboutPage,
     HomePage,
-    AboutPage
+    MyApp
   ],
   imports: [
     BrowserModule,
+    ComponentsModule,
     IonicModule.forRoot(MyApp),
   ],
   bootstrap: [IonicApp],
   entryComponents: [
-    MyApp,
+    AboutPage,
     HomePage,
-    AboutPage
+    MyApp,
   ],
   providers: [
     StatusBar,
     SplashScreen,
-    {provide: ErrorHandler, useClass: IonicErrorHandler}
+    StatusBar,
+    {provide: ErrorHandler, useClass: IonicErrorHandler},
+    CourseProvider
   ]
 })
 export class AppModule {}

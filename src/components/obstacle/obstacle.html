@@ -1,0 +1,11 @@
+<svg:g transform="translate(-54,-2)" style="stroke:black; stroke-width:1.5; stroke-linecap:round">
+    <svg:rect style="fill:grey" height="4" width="30" y="0" x="0" />
+    <svg:line y2="2" x2="78" y1="2" x1="30" />
+    <svg:rect style="fill:grey" height="4" width="30" y="0" x="78" />
+</svg:g>
+<svg:g transform="translate(0,-24)">
+    <svg:g *ngFor="let l of obstacle?.sides[0].labels; let i = index;" label [label]="l" [transform]="labelTransform()" [attr.transform]="sideTranslate(i)"></svg:g>
+</svg:g>
+<svg:g transform="translate(0,24)">
+    <svg:g *ngFor="let l of obstacle?.sides[1].labels; let i = index;" label [label]="l" [transform]="labelTransform()" [attr.transform]="sideTranslate(i)"></svg:g>
+</svg:g>

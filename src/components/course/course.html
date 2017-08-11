@@ -1,0 +1,8 @@
+<svg xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:cc="http://creativecommons.org/ns#" xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" xmlns:svg="http://www.w3.org/2000/svg" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+    [attr.height.px]="height" viewBox="10 20 360 550" preserveAspectRatio="xMidYMid meet" version="1.1">
+  <style type="text/css">
+    text {font-family:Calibri,Carlito,sans-serif;font-weight:normal;font-style:normal;font-stretch:normal;font-variant:normal;font-size:24px;text-anchor:middle;text-align:center;writing-mode:lr;line-height:125%;vertical-align:center;}
+  </style>
+  <g obstacle *ngFor="let o of course?.obstacles" [attr.transform]="o.transform" [obstacle]="o"></g>
+  <text x="190" y="580" style="fill:#FDC1C1;" class="site-name"></text>
+</svg>
