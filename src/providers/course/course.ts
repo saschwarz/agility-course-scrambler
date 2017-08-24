@@ -16,7 +16,7 @@ export class Side {
 
   constructor(labels?: Array<string>) {
     if (labels) {
-      this.labels = labels;
+      this.labels = [...labels];
     }
   }
 
