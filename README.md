@@ -1,6 +1,6 @@
 This is a demo application for my Introduction to Ionic presentation. The application generates and displays jump layout sequences for the sport of [Dog Agility](http://agilitynerd.com/). The native shake API is used to change sequences when the device is moved. See the list of tagged revisions for all the demonstrated features.
 
-![Logo](https://raw.githubusercontent.com/saschwarz/agility-course-scrambler/master/src/assets/logo-labeled.svg | width=300)
+<img src="./src/assets/logo-labeled.svg" width="300px"/>
 
 The app is built up from an Ionic starter template and includes tagged revisions for each step in the slides:
 
