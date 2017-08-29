@@ -16,7 +16,7 @@ The app is built up from an Ionic starter template and includes tagged revisions
 Here's the rest of the presentation:
 
 - [Slides](https://docs.google.com/presentation/d/1OmABc2JcqsPP3i6Q2EfYat-F6GKqGHjiUE2ywPcB09Q/edit?usp=sharing)
-- Video (coming soon)
+- [Video](https://youtu.be/fT8S_WuqcnQ)
 
 The application is also hosted from this repository as a Progressive Web App (PWA): [View Demo](https://saschwarz.github.io/agility-course-scrambler/)
 
